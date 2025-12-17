@@ -6,7 +6,7 @@ Exodus Contable es un proyecto académico desarrollado para el análisis y prueb
 
 Actualmente, el proyecto se encuentra en una fase de análisis, por lo que algunas decisiones técnicas están orientadas a facilitar la evaluación y las pruebas controladas.
 
----
+
 
 ## Advertencias importantes
 
@@ -17,13 +17,13 @@ Los archivos con extensión `.json` no deben ser editados manualmente.
 * Funcionan como almacenamiento interno del sistema.
 * Cualquier modificación directa puede:
 
-  * Corromper la información
-  * Generar errores de ejecución
-  * Invalidar los resultados del análisis
+* Corromper la información
+* Generar errores de ejecución
+* Invalidar los resultados del análisis
 
 Toda modificación debe realizarse únicamente a través del programa.
 
----
+
 
 ### Ejecución recomendada del proyecto
 
@@ -38,7 +38,7 @@ Esto garantiza que:
 * Los datos se carguen correctamente.
 * Las validaciones se ejecuten en el orden esperado.
 
----
+
 
 ### Ejecución individual de módulos
 
@@ -52,7 +52,7 @@ Nota:
 * Al ejecutar módulos de forma aislada, algunas funcionalidades pueden estar limitadas.
 * Esto se recomienda únicamente para pruebas técnicas o revisión de lógica interna.
 
----
+
 
 ## Requisitos del sistema
 
@@ -60,7 +60,7 @@ Nota:
 * Sistema operativo Windows (probado)
 * Consola o terminal habilitada
 
----
+
 
 ## Dependencias y librerías utilizadas
 
@@ -76,11 +76,11 @@ Este proyecto utiliza exclusivamente librerías estándar de Python, incluidas p
 
 No se requiere la instalación de librerías externas ni el uso de `pip`.
 
----
+
 
 ## Estructura básica del proyecto
 
-```
+
 Exodus-Contable/
 │
 ├── Exodus_Login.py
@@ -88,9 +88,9 @@ Exodus-Contable/
 ├── README.md
 ├── *.json
 └── otros archivos del sistema
-```
 
----
+
+
 
 ## Contexto académico
 
@@ -100,8 +100,6 @@ Este proyecto hace parte de un proceso de formación académica.
 * El código puede cambiar durante el proceso de evaluación
 * Algunas validaciones pueden encontrarse en desarrollo
 
----
-
 ## Notas finales
 
 * No alterar la estructura de carpetas
@@ -109,7 +107,7 @@ Este proyecto hace parte de un proceso de formación académica.
 * No modificar manualmente los archivos de datos
 * Todos los cambios deben realizarse desde el código fuente
 
----
+
 
 ## Autores
 
