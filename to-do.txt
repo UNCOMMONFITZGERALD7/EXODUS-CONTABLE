@@ -1,0 +1,21 @@
+To do:
+
+-Implementar iconos de los intros de los modulos
+
+-menu plegable
+
+-que en el menu salga una foto de perfil predeterminada del usuario, 
+con su nombre, y numero de cedula censurado (Que salgan los ultimos 
+3 numeros)
+
+-El numero de cedula sale de la base de datos de Miembros de la nómina
+
+-ir implementando modulo de contabilidad
+--Logica y estetica
+
+- añadir al boton de ayuda, 
+las opciones de recuperacion de contraseña, 
+contacto, y creditos
+
+- En información vamos a poner todo lo relacionado con el software, 
+info updates, y la opcion de mostrar permisos.
