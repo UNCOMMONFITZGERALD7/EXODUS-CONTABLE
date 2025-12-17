@@ -82,7 +82,7 @@ class ExodusMain(ctk.CTk):
                 "content": "#121212",
                 "texto_titulo": "#BBDEFB",
                 "boton": "#1565C0",
-                "hover": "#0D47A1"
+                "hover": "#636363"
             }
         }
 
@@ -122,7 +122,17 @@ class ExodusMain(ctk.CTk):
 
         self.sidebar = ctk.CTkFrame(self, fg_color=self.colores[self.tema_actual]["sidebar"], width=220, corner_radius=0)
         self.sidebar.grid(row=1, column=0, sticky="nsew")
+        
+        ## Contenedor de modulos
+        
+        self.sidebar_top = ctk.CTkFrame(self.sidebar, fg_color="transparent")
+        self.sidebar_top.pack(fill="both", expand=True)
+        
+        ## Contenedor de utilidades
 
+        self.sidebar_bottom = ctk.CTkFrame(self.sidebar, fg_color="transparent")
+        self.sidebar_bottom.pack(side="bottom", fill="x", pady=10)
+        
         self.content = ctk.CTkFrame(self, fg_color=self.colores[self.tema_actual]["content"])
         self.content.grid(row=1, column=1, sticky="nsew")
 
@@ -132,27 +142,70 @@ class ExodusMain(ctk.CTk):
 
     def _setup_sidebar(self):
           
-        ctk.CTkLabel(self.sidebar, text="Menú", text_color="white",
+        ctk.CTkLabel(self.sidebar_top, text="Menú", text_color="white",
                      font=("Helvetica", 16, "bold")).pack(pady=15)
 
-        buttons = [
+        top_buttons = [
             ("Inventarios", self.openbills),
             ("Contabilidad", self.accountingstats),
-            ("Recurso Humano", self.workers),
-            ("Configuración", self.configtools),
-            ("Cerrar sesión", self.logout),
-            ("Salir", self.exit),
+            ("Recurso Humano", self.workers)  
         ]
 
-        for text, cmd in buttons:
+        for text, cmd in top_buttons:
             ctk.CTkButton(
-                self.sidebar,
+                self.sidebar_top,
                 text=text,
                 command=cmd,
                 fg_color=self.colores[self.tema_actual]["boton"],
                 hover_color=self.colores[self.tema_actual]["hover"],
                 font=("Helvetica", 13, "bold")
             ).pack(fill="x", padx=15, pady=5)
+
+        btn_size = 42
+
+        self.btn_config = ctk.CTkButton(
+            self.sidebar_bottom,
+            image=self.icon_cfg,
+            text="",
+            width=42,
+            height=42,
+            compound="left",
+            border_spacing=6,
+            fg_color="transparent",
+            hover_color=self.colores[self.tema_actual]["hover"],
+            command=self.configtools
+        )
+        self.btn_config.pack(anchor="w", pady=5, padx=10)
+
+        self.btn_logout = ctk.CTkButton(
+            self.sidebar_bottom,
+            image=self.icon_logout,
+            text="",
+            width=42,
+            height=42,
+            compound="left",
+            border_spacing=6,
+            fg_color="transparent",
+            hover_color=self.colores[self.tema_actual]["hover"],
+            command=self.logout
+        )
+        self.btn_logout.pack(anchor="w", pady=5, padx=10)
+
+        self.btn_exit = ctk.CTkButton(
+            self.sidebar_bottom,
+            image=self.icon_exit,
+            text="",
+            width=42,
+            height=42,
+            compound="left",
+            border_spacing=6,
+            fg_color="transparent",
+            hover_color=self.colores[self.tema_actual]["hover"],
+            command=self.exit
+        )
+        self.btn_exit.pack(anchor="w", pady=5, padx=10)
+
+
 
     def clearcontent(self):
         for widget in self.content.winfo_children():
@@ -280,12 +333,13 @@ class ExodusMain(ctk.CTk):
         )
 
         # Botones de la barra lateral
-        for widget in self.sidebar.winfo_children():
-            if isinstance(widget, ctk.CTkButton):
-                widget.configure(
-                    fg_color=colores["boton"],
-                    hover_color=colores["hover"]
-                )
+        for frame in (self.sidebar_top, self.sidebar_bottom):
+            for widget in frame.winfo_children():
+                if isinstance(widget, ctk.CTkButton):
+                    widget.configure(
+                        fg_color=colores["boton"],
+                        hover_color=colores["hover"]
+                    )
 
         # Contenido dinámico (Configuración, Usuarios, etc.)
         for widget in self.content.winfo_children():
