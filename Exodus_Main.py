@@ -2,18 +2,54 @@ import customtkinter as ctk
 import os, sys, json, subprocess
 from tkinter import messagebox
 from CTkMessagebox import CTkMessagebox
+from PIL import Image
 
 ctk.set_appearance_mode("light")
 ctk.set_default_color_theme("blue")
 
-class ExodusMain(ctk.CTk):
-    ctk.set_appearance_mode("light")
-    ctk.set_default_color_theme("blue")
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+iconos_light_DIR = os.path.join(BASE_DIR, "Imageresources", "icomod", "light")
+iconos_dark_DIR = os.path.join(BASE_DIR, "Imageresources", "icomod", "dark")
+
+
 
 class ExodusMain(ctk.CTk):
+    
+    def load_icon(self, key, size=(22, 22)):
+        base = self.ICON_FILES[key]
+
+        light_path = os.path.join(iconos_light_DIR, f"{base}l.ico")
+        dark_path = os.path.join(iconos_dark_DIR, f"{base}d.ico")
+
+        if not os.path.exists(light_path) or not os.path.exists(dark_path):
+            raise FileNotFoundError(f"Icono no encontrado para: {key}")
+
+        return ctk.CTkImage(
+            light_image=Image.open(light_path),
+            dark_image=Image.open(dark_path),
+            size=size
+        )
+    
     def __init__(self, rol="Operario"):
         super().__init__()
-    
+
+        self.ICON_FILES = {
+            "inventario": "ico_invmod",
+            "nomina": "ico_reshmod",
+            "contabilidad": "ico_accmod",
+            "configuracion": "ico_configmod",
+            "logout": "ico_cesesfunc",
+            "exit": "ico_exitfunc",
+        }  
+
+        self.icon_inv = self.load_icon("inventario")
+        self.icon_nom = self.load_icon("nomina")
+        self.icon_acc = self.load_icon("contabilidad")
+        self.icon_cfg = self.load_icon("configuracion")
+        self.icon_logout = self.load_icon("logout")
+        self.icon_exit = self.load_icon("exit")
+
+        
         self.title("Exodus Contable ver. 1.0")
         try:
             with open("config.json", "r", encoding="utf-8") as f:
@@ -72,7 +108,7 @@ class ExodusMain(ctk.CTk):
                 self.iconbitmap("iconexolight.ico")
         except Exception as e:
             print(f"Error cargando ícono: {e}")
-
+        
         self.topbar = ctk.CTkFrame(self, fg_color=self.colores[self.tema_actual]["topbar"], height=50, corner_radius=0)
         self.topbar.grid(row=0, column=0, columnspan=2, sticky="nsew")
 
@@ -95,6 +131,7 @@ class ExodusMain(ctk.CTk):
         self.state("zoomed")
 
     def _setup_sidebar(self):
+          
         ctk.CTkLabel(self.sidebar, text="Menú", text_color="white",
                      font=("Helvetica", 16, "bold")).pack(pady=15)
 
@@ -981,43 +1018,44 @@ class ExodusMain(ctk.CTk):
             font=("Helvetica", 14, "bold")
         ).pack(pady=20)
 
-        def deltags(self):
-            try:
-                with open("DBetiquetas.json", "r", encoding="utf-8") as f:
-                    etiquetas = json.load(f)
-            except FileNotFoundError:
-                etiquetas = []
 
-            if not etiquetas:
-                CTkMessagebox(title="Sin Datos",
-                            message="No hay etiquetas registradas para eliminar.",
-                            icon="warning")
-                return
+    def deltags(self):
+        try:
+            with open("DBetiquetas.json", "r", encoding="utf-8") as f:
+                etiquetas = json.load(f)
+        except FileNotFoundError:
+            etiquetas = []
 
-            win = ctk.CTkToplevel(self)
-            win.title("Eliminar Etiqueta Contable")
-            win.geometry("360x300")
-            win.resizable(False, False)
-            try:
-                win.iconbitmap("ExodusIcon.ico")
-            except Exception:
-                pass
+        if not etiquetas:
+            CTkMessagebox(title="Sin Datos",
+                        message="No hay etiquetas registradas para eliminar.",
+                        icon="warning")
+            return
 
-            win.transient(self)
-            win.grab_set()
-            win.focus_force()
-            win.update_idletasks()
-            width, height = 360, 300
-            x = (win.winfo_screenwidth() // 2) - (width // 2)
-            y = (win.winfo_screenheight() // 2) - (height // 2)
-            win.geometry(f"{width}x{height}+{x}+{y}")
+        win = ctk.CTkToplevel(self)
+        win.title("Eliminar Etiqueta Contable")
+        win.geometry("360x300")
+        win.resizable(False, False)
+        try:
+            win.iconbitmap("ExodusIcon.ico")
+        except Exception:
+            pass
 
-            ctk.CTkLabel(win, text="Selecciona una etiqueta para eliminar", font=("Helvetica", 14, "bold")).pack(pady=10)
+        win.transient(self)
+        win.grab_set()
+        win.focus_force()
+        win.update_idletasks()
+        width, height = 360, 300
+        x = (win.winfo_screenwidth() // 2) - (width // 2)
+        y = (win.winfo_screenheight() // 2) - (height // 2)
+        win.geometry(f"{width}x{height}+{x}+{y}")
 
-            etiquetas_nombres = [e["nombre"] for e in etiquetas]
-            etiqueta_menu = ctk.CTkOptionMenu(win, values=etiquetas_nombres)
-            etiqueta_menu.pack(pady=10)
-            etiqueta_menu.set(etiquetas_nombres[0])
+        ctk.CTkLabel(win, text="Selecciona una etiqueta para eliminar", font=("Helvetica", 14, "bold")).pack(pady=10)
+
+        etiquetas_nombres = [e["nombre"] for e in etiquetas]
+        etiqueta_menu = ctk.CTkOptionMenu(win, values=etiquetas_nombres)
+        etiqueta_menu.pack(pady=10)
+        etiqueta_menu.set(etiquetas_nombres[0])
 
         def eliminar():
             seleccion = etiqueta_menu.get()
