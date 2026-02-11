@@ -23,5 +23,15 @@
         "nombre": "Pension",
         "taxes": 1.12,
         "modulo": "Nómina"
+    },
+    {
+        "nombre": "Culos",
+        "taxes": 400.0,
+        "modulo": "Contabilidad"
+    },
+    {
+        "nombre": "Impuesto ropa",
+        "taxes": 1.06,
+        "modulo": "Inventario"
     }
 ]

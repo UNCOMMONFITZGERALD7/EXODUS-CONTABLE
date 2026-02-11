@@ -77,7 +77,7 @@ class ExodusMain(ctk.CTk):
                 "hover": "#0D47A1"
             },
             "oscuro": {
-                "topbar": "#0D47A1",
+                "topbar": "#1E365A",
                 "sidebar": "#1E1E1E",
                 "content": "#121212",
                 "texto_titulo": "#BBDEFB",
@@ -109,6 +109,8 @@ class ExodusMain(ctk.CTk):
         except Exception as e:
             print(f"Error cargando ícono: {e}")
         
+        ## Contenedor titulo
+        
         self.topbar = ctk.CTkFrame(self, fg_color=self.colores[self.tema_actual]["topbar"], height=50, corner_radius=0)
         self.topbar.grid(row=0, column=0, columnspan=2, sticky="nsew")
 
@@ -123,6 +125,10 @@ class ExodusMain(ctk.CTk):
         self.sidebar = ctk.CTkFrame(self, fg_color=self.colores[self.tema_actual]["sidebar"], width=220, corner_radius=0)
         self.sidebar.grid(row=1, column=0, sticky="nsew")
         
+        self.sidebar.pack_propagate(False)
+        self.sidebar.grid_propagate(False)
+
+        
         ## Contenedor de modulos
         
         self.sidebar_top = ctk.CTkFrame(self.sidebar, fg_color="transparent")
@@ -133,8 +139,20 @@ class ExodusMain(ctk.CTk):
         self.sidebar_bottom = ctk.CTkFrame(self.sidebar, fg_color="transparent")
         self.sidebar_bottom.pack(side="bottom", fill="x", pady=10)
         
+        ## Contenedor sidebar plegable
+        
+        self.sidebar_expanded = True
+        self.sidebar_width_expanded = 200
+        self.sidebar_width_collapsed = 65
+
+        self.sidebar.configure(width=self.sidebar_width_expanded)
+
+        ## Contenedor general
+        
         self.content = ctk.CTkFrame(self, fg_color=self.colores[self.tema_actual]["content"])
         self.content.grid(row=1, column=1, sticky="nsew")
+
+        ## Controladores
 
         self._setup_sidebar()
         self.welcomescreen()
@@ -146,20 +164,29 @@ class ExodusMain(ctk.CTk):
                      font=("Helvetica", 16, "bold")).pack(pady=15)
 
         top_buttons = [
-            ("Inventarios", self.openbills),
-            ("Contabilidad", self.accountingstats),
-            ("Recurso Humano", self.workers)  
+            ("Inventarios", self.icon_inv, self.openbills),
+            ("Contabilidad", self.icon_acc, self.accountingstats),
+            ("Recurso Humano", self.icon_nom, self.workers)  
         ]
 
-        for text, cmd in top_buttons:
-            ctk.CTkButton(
-                self.sidebar_top,
+        self.top_buttons = []
+
+        for text, icon, cmd in top_buttons:
+            btn = ctk.CTkButton(
+                self.sidebar_top, font=("Helvetica", 16),
                 text=text,
-                command=cmd,
-                fg_color=self.colores[self.tema_actual]["boton"],
+                image=icon,
+                compound="left",
+                anchor="w",
+                border_spacing=5,
+                fg_color="transparent",
                 hover_color=self.colores[self.tema_actual]["hover"],
-                font=("Helvetica", 13, "bold")
-            ).pack(fill="x", padx=15, pady=5)
+                command=cmd
+            )
+            btn.original_text = text
+            btn.is_sidebar_top = True
+            btn.pack(fill="x", padx=10, pady=0)
+            self.top_buttons.append(btn)
 
         btn_size = 42
 
@@ -204,6 +231,20 @@ class ExodusMain(ctk.CTk):
             command=self.exit
         )
         self.btn_exit.pack(anchor="w", pady=5, padx=10)
+    
+    def _toggle_top_buttons_text(self, show: bool):
+        for btn in self.top_buttons:
+            btn.configure(text=btn.original_text if show else "")
+
+    def toggle_sidebar(self):
+        if self.sidebar_expanded:
+            self.sidebar.configure(width=self.sidebar_width_collapsed)
+            self._toggle_top_buttons_text(False)
+        else:
+            self.sidebar.configure(width=self.sidebar_width_expanded)
+            self._toggle_top_buttons_text(True)
+
+        self.sidebar_expanded = not self.sidebar_expanded
 
 
 
@@ -336,10 +377,16 @@ class ExodusMain(ctk.CTk):
         for frame in (self.sidebar_top, self.sidebar_bottom):
             for widget in frame.winfo_children():
                 if isinstance(widget, ctk.CTkButton):
-                    widget.configure(
-                        fg_color=colores["boton"],
-                        hover_color=colores["hover"]
-                    )
+                    if getattr(widget, "is_sidebar_top", False):
+                        widget.configure(
+                            fg_color="transparent",
+                            hover_color=colores["hover"]
+                        )
+                    else:
+                        widget.configure(
+                            fg_color=colores["boton"],
+                            hover_color=colores["hover"]
+                        )
 
         # Contenido dinámico (Configuración, Usuarios, etc.)
         for widget in self.content.winfo_children():
