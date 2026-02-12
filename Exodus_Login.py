@@ -9,12 +9,12 @@ from datetime import datetime
 
 exodus = ctk.CTk()
 ctk.set_widget_scaling(1.2)
-exodus.title("Exodus Contable Alpha 0.12log")
-exodus.geometry("400x750")
+exodus.title("Exodus Contable Pre-Alpha")
+exodus.geometry("400x600")
 ctk.set_appearance_mode("Dark")
 exodus.iconbitmap("iconexodark.ico")
 ancho = 400
-alto = 750
+alto = 600
 pant_ancho = exodus.winfo_screenwidth()
 pant_alto = exodus.winfo_screenheight()
 x = int((pant_ancho / 2) - (ancho / 2))
@@ -41,7 +41,7 @@ fondologobg_ctk = ctk.CTkImage(
 )
 
 label_fondo = ctk.CTkLabel(exodus, image=fondologobg_ctk, text="")
-label_fondo.place(relx=0.5, y=170, anchor="center")
+label_fondo.place(relx=0.5, y=150, anchor="center")
 label_fondo.lower()
 
 # Database (Usamos archivos .json)
