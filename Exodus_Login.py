@@ -130,7 +130,7 @@ def timestamp_login(usuario):
     archivo_log = "datalogins.json"
     now = datetime.now()
     registro = {
-        "usuario": usuario,  # o como se llame tu variable de usuario actual
+        "usuario": usuario,  # nombre de la variable de usuario actual (No tocar)
         "fecha": now.strftime("%Y-%m-%d"),
         "hora": now.strftime("%H:%M:%S")
     }
@@ -262,16 +262,6 @@ conteXT2 = ctk.CTkLabel(
     font=("Helvetica", 11, "bold")
 )
 
-#Reloj - lO USARÉ PARA HACER LOS TIME STAMP DE INICIOS DE SESION, COMO UN HISTORIAL.
-
-FondoReloj = ctk.CTkLabel(exodus, text="00:00:00", text_color="white", font=("Helvetica", 12, "bold"))
-
-def funcionamientoreloj():
-    FondoReloj.configure(text=time.strftime("%H:%M:%S"))
-    exodus.after(1000, funcionamientoreloj)
-
-funcionamientoreloj()
-
 ##################################################################################
 ##################################################################################
 
@@ -288,7 +278,6 @@ reminduser.pack(pady=3)
 #Textos y botones 2
 bTlogin.pack(pady=5)
 bTexit.pack(pady= 5)
-#Cosmeticos
-FondoReloj.place(relx= 0.45, y= 600)
+
 
 exodus.mainloop()
