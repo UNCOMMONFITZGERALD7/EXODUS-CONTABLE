@@ -113,7 +113,22 @@ class ExodusMain(ctk.CTk):
         
         self.topbar = ctk.CTkFrame(self, fg_color=self.colores[self.tema_actual]["topbar"], height=50, corner_radius=0)
         self.topbar.grid(row=0, column=0, columnspan=2, sticky="nsew")
+        
+        self.btn_toggle = ctk.CTkButton(
+            self.topbar,
+            text="☰",
+            width=40,
+            height=40,
+            fg_color="transparent",
+            hover_color=self.colores[self.tema_actual]["hover"],
+            text_color="white" if self.tema_actual == "claro" else "#BBDEFB",
+            font=("Helvetica", 18, "bold"),
+            command=self.toggle_sidebar
+        )
 
+        self.btn_toggle.pack(side="left", padx=(10, 5), pady=5)
+        
+        
         self.title_label = ctk.CTkLabel(
             self.topbar,
             text="Exodus Contable",
@@ -240,9 +255,11 @@ class ExodusMain(ctk.CTk):
         if self.sidebar_expanded:
             self.sidebar.configure(width=self.sidebar_width_collapsed)
             self._toggle_top_buttons_text(False)
+            self.btn_toggle.configure(text="▶")
         else:
             self.sidebar.configure(width=self.sidebar_width_expanded)
             self._toggle_top_buttons_text(True)
+            self.btn_toggle.configure(text="☰")
 
         self.sidebar_expanded = not self.sidebar_expanded
 
@@ -364,7 +381,7 @@ class ExodusMain(ctk.CTk):
         
     def actualizar_colores(self):
         colores = self.colores[self.tema_actual]
-
+        
         # Contenedores principales
         self.topbar.configure(fg_color=colores["topbar"])
         self.sidebar.configure(fg_color=colores["sidebar"])
@@ -372,6 +389,13 @@ class ExodusMain(ctk.CTk):
         self.title_label.configure(
             text_color="white" if self.tema_actual == "claro" else "#BBDEFB"
         )
+        
+        # Actualizar colores del boton de la barra plegable
+        
+        self.btn_toggle.configure(
+        hover_color=colores["hover"],
+        text_color="white" if self.tema_actual == "claro" else "#BBDEFB"
+    )
 
         # Botones de la barra lateral
         for frame in (self.sidebar_top, self.sidebar_bottom):
