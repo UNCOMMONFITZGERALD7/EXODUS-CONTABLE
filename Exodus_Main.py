@@ -74,15 +74,19 @@ class ExodusMain(ctk.CTk):
                 "content": "#E3F2FD",
                 "texto_titulo": "#0D47A1",
                 "boton": "#1976D2",
-                "hover": "#0D47A1"
+                "hover": "#0D47A1",
+                "text": "#000000",
+                "bottom": "transparent"
             },
             "oscuro": {
                 "topbar": "#1E365A",
                 "sidebar": "#1E1E1E",
                 "content": "#121212",
                 "texto_titulo": "#BBDEFB",
-                "boton": "#1565C0",
-                "hover": "#636363"
+                "boton": "#313131",
+                "hover": "#383838",
+                "text": "#FFFFFF",
+                "bottom": "transparent"
             }
         }
 
@@ -144,17 +148,17 @@ class ExodusMain(ctk.CTk):
         self.sidebar.grid_propagate(False)
 
         
-        ## Contenedor de modulos
+    ## Contenedor de modulos
         
         self.sidebar_top = ctk.CTkFrame(self.sidebar, fg_color="transparent")
         self.sidebar_top.pack(fill="both", expand=True)
         
-        ## Contenedor de utilidades
+    ## Contenedor de utilidades
 
         self.sidebar_bottom = ctk.CTkFrame(self.sidebar, fg_color="transparent")
         self.sidebar_bottom.pack(side="bottom", fill="x", pady=10)
         
-        ## Contenedor sidebar plegable
+    ## Contenedor sidebar plegable
         
         self.sidebar_expanded = True
         self.sidebar_width_expanded = 200
@@ -162,12 +166,12 @@ class ExodusMain(ctk.CTk):
 
         self.sidebar.configure(width=self.sidebar_width_expanded)
 
-        ## Contenedor general
+    ## Contenedor general
         
         self.content = ctk.CTkFrame(self, fg_color=self.colores[self.tema_actual]["content"])
         self.content.grid(row=1, column=1, sticky="nsew")
 
-        ## Controladores
+    ## Controladores
 
         self._setup_sidebar()
         self.welcomescreen()
@@ -217,6 +221,7 @@ class ExodusMain(ctk.CTk):
             hover_color=self.colores[self.tema_actual]["hover"],
             command=self.configtools
         )
+        self.btn_config.is_sidebar_top = True
         self.btn_config.pack(anchor="w", pady=5, padx=10)
 
         self.btn_logout = ctk.CTkButton(
@@ -231,6 +236,7 @@ class ExodusMain(ctk.CTk):
             hover_color=self.colores[self.tema_actual]["hover"],
             command=self.logout
         )
+        self.btn_logout.is_sidebar_top = True
         self.btn_logout.pack(anchor="w", pady=5, padx=10)
 
         self.btn_exit = ctk.CTkButton(
@@ -245,6 +251,7 @@ class ExodusMain(ctk.CTk):
             hover_color=self.colores[self.tema_actual]["hover"],
             command=self.exit
         )
+        self.btn_exit.is_sidebar_top = True
         self.btn_exit.pack(anchor="w", pady=5, padx=10)
     
     def _toggle_top_buttons_text(self, show: bool):
@@ -309,7 +316,7 @@ class ExodusMain(ctk.CTk):
         ctk.CTkButton(options_frame, text="Monitorear Usuarios",
                       command=self.seeloginsusers, font=("Helvetica", 15, "bold"),
                       fg_color=self.colores[self.tema_actual]["boton"], hover_color=self.colores[self.tema_actual]["hover"], width=320, height=45).pack(pady=10)
-        
+
         try:
             with open("config.json", "r", encoding="utf-8") as f:
                 config = json.load(f)
@@ -319,19 +326,19 @@ class ExodusMain(ctk.CTk):
 
         ctk.CTkLabel(options_frame, text="Tema del sistema:",
                  font=("Helvetica", 15, "bold"),
-                 text_color="#0D47A1").pack(pady=(20, 5))
+                 text_color=self.colores[self.tema_actual]["text"]).pack(pady=(20, 5))
         
-        tema_menu = ctk.CTkOptionMenu(
+        self.tema_menu = ctk.CTkOptionMenu(
             options_frame,
             values=["Claro", "Oscuro", "Sistema"],
             command=self.cambiar_tema
         )
-        tema_menu.pack(pady=5)
+        self.tema_menu.pack(pady=5)
 
         if tema_actual in ["Claro", "Oscuro", "Sistema"]:
-            tema_menu.set(tema_actual)
+            self.tema_menu.set(tema_actual)
         else:
-            tema_menu.set("Claro")
+            self.tema_menu.set("Claro")
 
     def backbutt(self, parent_frame, command=None):
         if command is None:
@@ -378,6 +385,8 @@ class ExodusMain(ctk.CTk):
                 self.iconbitmap("iconexolight.ico")
         except Exception as e:
             print(f"Error cambiando ícono: {e}")
+            
+    ## Actualizar colores
         
     def actualizar_colores(self):
         colores = self.colores[self.tema_actual]
@@ -431,6 +440,16 @@ class ExodusMain(ctk.CTk):
                 fg_color="#1E1E1E" if self.tema_actual == "oscuro" else "white",
                 text_color="#E3E3E3" if self.tema_actual == "oscuro" else "black"
             )
+        
+        elif isinstance(widget, ctk.CTkOptionMenu):
+            widget.configure(
+                fg_color=self.colores["boton"],
+                button_color=self.colores["boton_hover"],
+                button_hover_color=self.colores["boton"],
+                text_color=self.colores["text"],
+                dropdown_fg_color=self.colores["content"]
+            )
+        
         for child in widget.winfo_children():
             self._aplicar_colores_a_widget(child, colores)
 
