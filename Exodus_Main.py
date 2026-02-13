@@ -4,7 +4,6 @@ from tkinter import messagebox
 from CTkMessagebox import CTkMessagebox
 from PIL import Image
 
-ctk.set_appearance_mode("light")
 ctk.set_default_color_theme("blue")
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
@@ -300,7 +299,7 @@ class ExodusMain(ctk.CTk):
     def configtools(self):
         self.clearcontent()
         ctk.CTkLabel(self.content, text="Configuración",
-                     font=("Helvetica", 22, "bold"), text_color="#0D47A1").pack(pady=20)
+                     font=("Helvetica", 22, "bold"), text_color=self.colores[self.tema_actual]["text"]).pack(pady=20)
 
         options_frame = ctk.CTkFrame(self.content, fg_color=self.colores[self.tema_actual]["content"])
         options_frame.pack(pady=10)
@@ -335,7 +334,7 @@ class ExodusMain(ctk.CTk):
         )
         self.tema_menu.pack(pady=5)
 
-        if tema_actual in ["Claro", "Oscuro", "Sistema"]:
+        if self.tema_actual in ["Claro", "Oscuro", "Sistema"]:
             self.tema_menu.set(tema_actual)
         else:
             self.tema_menu.set("Claro")
@@ -378,6 +377,7 @@ class ExodusMain(ctk.CTk):
             json.dump(config, f, indent=4, ensure_ascii=False)
         self.tema_actual = modo if modo in ["claro", "oscuro"] else "claro"
         self.actualizar_colores()
+
         try:
             if self.tema_actual == "oscuro":
                 self.iconbitmap("iconexodark.ico")
@@ -443,11 +443,12 @@ class ExodusMain(ctk.CTk):
         
         elif isinstance(widget, ctk.CTkOptionMenu):
             widget.configure(
-                fg_color=self.colores["boton"],
-                button_color=self.colores["boton_hover"],
-                button_hover_color=self.colores["boton"],
-                text_color=self.colores["text"],
-                dropdown_fg_color=self.colores["content"]
+                fg_color=self.colores[self.tema_actual]["boton"],
+                hover_color=self.colores[self.tema_actual]["hover"],
+                button_color=self.colores[self.tema_actual]["boton"],
+                button_hover_color=self.colores[self.tema_actual]["hover"],
+                dropdown_hover_color=self.colores[self.tema_actual]["hover"],
+                dropdown_fg_color=self.colores[self.tema_actual]["content"]
             )
         
         for child in widget.winfo_children():
