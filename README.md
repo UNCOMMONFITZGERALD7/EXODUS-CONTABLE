@@ -1,116 +1,71 @@
 # Exodus Contable
 
-## Descripción general
+Software contable de escritorio desarrollado en **Python** con interfaz gráfica en **CustomTkinter** y **programación orientada a objetos (POO)**. Proyecto académico en desarrollo.
 
-Exodus Contable es un proyecto académico desarrollado para el análisis y prueba del flujo de autenticación y ejecución principal del sistema.
+## Estado del proyecto
 
-Actualmente, el proyecto se encuentra en una fase de análisis, por lo que algunas decisiones técnicas están orientadas a facilitar la evaluación y las pruebas controladas.
+En desarrollo. Está planificada una migración futura hacia una versión web.
 
+## Funcionalidades
 
+- Inicio de sesión con usuarios.
+- Módulo principal con gestión de inventario, trabajadores, contabilidad y etiquetas.
+- Almacenamiento local en archivos JSON (sin base de datos).
+- Tema claro y oscuro con iconos propios.
 
-## Advertencias importantes
+## Tecnologías
 
-### No modificar archivos JSON manualmente
+| Tecnología | Uso |
+|---|---|
+| Python 3.10+ | Lenguaje principal |
+| CustomTkinter | Interfaz gráfica |
+| JSON | Almacenamiento de datos |
+| Librerías estándar (`json`, `os`, `sys`, `getpass`, `time`) | Lectura y escritura de datos, rutas, control de ejecución y temporización |
 
-Los archivos con extensión `.json` no deben ser editados manualmente.
+## Requisitos
 
-* Funcionan como almacenamiento interno del sistema.
-* Cualquier modificación directa puede:
+- Python 3.10 o superior
+- Windows (sistema en el que se ha probado)
+- `pip` para instalar CustomTkinter
 
-* Corromper la información
-* Generar errores de ejecución
-* Invalidar los resultados del análisis
+## Instalación y ejecución
 
-Toda modificación debe realizarse únicamente a través del programa.
+```bash
+git clone https://github.com/UNCOMMONFITZGERALD7/EXODUS-CONTABLE.git
+cd EXODUS-CONTABLE
+pip install customtkinter
+python Exodus_Login.py
+```
 
+Ejecuta siempre `Exodus_Login.py` y sigue el flujo normal hasta llegar al módulo principal. Así los datos se cargan correctamente y las validaciones se ejecutan en el orden esperado.
 
+Es posible probar `Exodus_Login.py` y `Exodus_Main.py` por separado, pero algunas funciones quedan limitadas. Se recomienda solo para pruebas técnicas o revisión de la lógica interna.
 
-### Ejecución recomendada del proyecto
+## Advertencias
 
-Para un análisis completo y correcto, se recomienda:
+- **No edites los archivos `.json` a mano.** Funcionan como almacenamiento interno, y una modificación directa puede corromper la información o generar errores de ejecución.
+- No alteres la estructura de carpetas.
+- No elimines archivos aunque no se usen directamente.
+- Todos los cambios deben hacerse desde el código fuente.
 
-1. Descargar el repositorio completo.
-2. Ejecutar el archivo `Exodus_Login.py`.
-3. Seguir el flujo normal del sistema hasta llegar al módulo principal.
+## Estructura del proyecto
 
-Esto garantiza que:
-
-* Los datos se carguen correctamente.
-* Las validaciones se ejecuten en el orden esperado.
-
-
-
-### Ejecución individual de módulos
-
-De forma individual, es posible realizar pruebas separadas de:
-
-* `Exodus_Login.py`
-* `Exodus_Main.py`
-
-Nota:
-
-* Al ejecutar módulos de forma aislada, algunas funcionalidades pueden estar limitadas.
-* Esto se recomienda únicamente para pruebas técnicas o revisión de lógica interna.
-
-
-
-## Requisitos del sistema
-
-* Python 3.10 o superior
-* Sistema operativo Windows (probado)
-* Consola o terminal habilitada
-
-
-
-## Dependencias y librerías utilizadas
-
-Este proyecto utiliza exclusivamente librerías estándar de Python, incluidas por defecto en la instalación oficial.
-
-### Librerías usadas
-
-* `json`: Lectura y escritura de datos estructurados
-* `os`: Gestión de rutas, archivos y validaciones del sistema
-* `sys`: Control del flujo de ejecución y salida del programa
-* `getpass`: Entrada segura de contraseñas en consola
-* `time`: Manejo de pausas y temporización
-
-No se requiere la instalación de librerías externas ni el uso de `pip`.
-
-
-
-## Estructura básica del proyecto
-
-
-Exodus-Contable/
-│
-├── Exodus_Login.py
-├── Exodus_Main.py
-├── README.md
-├── *.json
-└── otros archivos del sistema
-
-
-
+```
+EXODUS-CONTABLE/
+├── Exodus_Login.py      # Punto de entrada: inicio de sesión
+├── Exodus_Main.py       # Módulo principal
+├── config.json          # Configuración
+├── *.json               # Datos del sistema (usuarios, inventario, trabajadores, contabilidad, etiquetas)
+├── Imageresources/      # Iconos e imágenes
+├── LogLogins/           # Registros de inicio de sesión
+├── to-do.txt            # Pendientes
+└── README.md
+```
 
 ## Contexto académico
 
-Este proyecto hace parte de un proceso de formación académica.
+Este proyecto hace parte de un proceso de formación. No está destinado a producción, y el código puede cambiar durante el proceso de evaluación.
 
-* No está destinado a uso en producción
-* El código puede cambiar durante el proceso de evaluación
-* Algunas validaciones pueden encontrarse en desarrollo
+## Autor
 
-## Notas finales
-
-* No alterar la estructura de carpetas
-* No eliminar archivos aunque no se utilicen directamente
-* No modificar manualmente los archivos de datos
-* Todos los cambios deben realizarse desde el código fuente
-
-
-
-## Autores
-
-* Jesús Daniel Perez Berrocal
-* Camilo Andres Meza De Avila
-* Andres Camilo Sarmiento Leudo
+Jesús Daniel Pérez Berrocal
