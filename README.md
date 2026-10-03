@@ -1,6 +1,6 @@
 # Exodus Contable
 
-Software contable de escritorio desarrollado en **Python** con interfaz gráfica en **CustomTkinter** y **programación orientada a objetos (POO)**. Proyecto académico en desarrollo.
+Software contable de escritorio desarrollado en **Python** con interfaz gráfica en **CustomTkinter** y **programación orientada a objetos (POO)**. Proyecto en desarrollo.
 
 ## Estado del proyecto
 
@@ -64,7 +64,7 @@ EXODUS-CONTABLE/
 
 ## Contexto académico
 
-Este proyecto hace parte de un proceso de formación. No está destinado a producción, y el código puede cambiar durante el proceso de evaluación.
+No está destinado a producción, y el código puede cambiar durante el proceso de evaluación.
 
 ## Autor
 
